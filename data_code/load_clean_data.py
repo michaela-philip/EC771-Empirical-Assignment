@@ -23,3 +23,8 @@ main['firm_exists'] = np.where((main['firm_cohort'] < main['year']), 1, 0) #if t
 main['firm_exists_state'] = np.where((main['firm_cohort_state'] < main['year']), 1, 0) #if the firm existed in the state before the year observed
 
 main.to_csv('data/output/main_plus.csv', index=False)
+
+subsidy = subsidy.melt(id_vars='PDPregion', value_vars = ['s2006', 's2007', 's2008', 's2009', 's2010'], var_name='year', value_name='subsidy')
+subsidy['year'] = subsidy['year'].str[1:].astype(int)
+
+subsidy.to_csv('data/output/subsidy_plus.csv', index=False)
