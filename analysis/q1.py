@@ -1,6 +1,11 @@
 import numpy as np
 import pandas as pd
 from tabulate import tabulate
+import os
+import sys
+
+script_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.join(script_dir, '..'))
 
 from data_code.load_data import main as main
 from data_code.load_data import subsidy as subsidy
