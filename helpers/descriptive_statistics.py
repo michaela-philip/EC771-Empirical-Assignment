@@ -2,30 +2,39 @@ import pandas as pd
 import numpy as np
 
 def get_stats(df):
+
     data = []
 
-    for i in df['cohort_year'].unique():
-        #calculate the values
-        monthly_premium = np.mean(df[df['cohort_year'] == i]['premium']).round(0)
-        monthly_premium_std = np.std(df[df['cohort_year'] == i]['premium']).round(0)
-        deductible = np.mean(df[df['cohort_year'] == i]['deductible']).round(0)
-        deductible_std = np.std(df[df['cohort_year'] == i]['deductible']).round(0)
-        benefit = ((((df['benefit'] == 'E') & (df['cohort_year'] ==i)).sum()) / len(df[df['cohort_year'] == i])).round(2)
-        existing_firm_US = round((len(df[(df['firm_cohort'] != i) & (df['cohort_year'] == i)]) / len(df[df['cohort_year'] == i])), 2)
-        existing_firm_state = round((len(df[(df['firm_cohort_state'] != i) & (df['cohort_year'] == i)])) / (len(df[df['cohort_year'] == i])), 2)
-        firms = df[df['cohort_year']==i]['orgParentCode'].nunique()
-        plans = df[df['cohort_year']==i]['uniqueID'].nunique()
+    year = df['cohort_year']
+    df = df[df['plan_age'] == 0]
+    premium = df.groupby('cohort_year')['premium'].agg(['mean']).round(0)
+    premium_std = df.groupby('cohort_year')['premium'].agg(['std']).round(0)
+    deductible = df.groupby('cohort_year')['deductible'].agg(['mean']).round(0)
+    deductible_std = df.groupby('cohort_year')['deductible'].agg(['std']).round(0)
+    enhanced_benefit = df.groupby('cohort_year')['e_ben'].mean().round(2)
+    firms = df.groupby('cohort_year')['orgParentCode'].nunique()
+    plans = df.groupby('cohort_year')['uniqueID'].nunique()
+    existing_firm_US = df.groupby('cohort_year')['firm_exists'].mean().round(2)
+    existing_firm_state = df.groupby('cohort_year')['firm_exists_state'].mean().round(2)
+    
+    #get rid of trailing zeros and do some formatting
+    premium = premium.map('${:.0f}'.format)
+    premium_std = premium_std.map('({:.0f})'.format)
+    deductible = deductible.map('${:.0f}'.format)
+    deductible_std = deductible_std.map('({:.0f})'.format)
+    plans = plans.map('{:,.0f}'.format)
 
-        #get rid of trailing zeros and do some formatting
-        year = '{:.0f}'.format(i)
-        monthly_premium = '${:.0f}'.format(monthly_premium)
-        monthly_premium_std = '({:.0f})'.format(monthly_premium_std)
-        deductible = '${:.0f}'.format(deductible)
-        deductible_std = '({:.0f})'.format(deductible_std)
-        plans = '{:,.0f}'.format(plans)
+    cohort_year = [2006, 2007, 2008, 2009, 2010]
 
-        #append the values 
-        data.append({'year': year, 'premium': monthly_premium, 'premium_std': monthly_premium_std, 'deductible': deductible, 'ded_std': deductible_std, 'benefit': benefit, 'existing US firm' : existing_firm_US, 'existing state firm' : existing_firm_state, 'firms': firms, 'plans': plans})
+    premium.index = cohort_year
+    premium_std.index = cohort_year
+    deductible.index = cohort_year
+    deductible_std.index = cohort_year
+    enhanced_benefit.index = cohort_year
+    firms.index = cohort_year
+    plans.index = cohort_year
+    existing_firm_US.index = cohort_year
+    existing_firm_state.index = cohort_year
 
-    output = pd.DataFrame(data)
+    output = pd.concat([premium, premium_std, deductible, deductible_std, enhanced_benefit, existing_firm_US, existing_firm_state, firms, plans], axis = 1)
     return output
