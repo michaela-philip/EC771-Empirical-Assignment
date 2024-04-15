@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 from tabulate import tabulate
 
-from load_data import main as main
-from load_data import subsidy as subsidy
+from data_code.load_data import main as main
+from data_code.load_data import subsidy as subsidy
 
 from helpers.descriptive_statistics import get_stats
 
