@@ -13,11 +13,9 @@ def get_bins(df, year, n_bins, h):
 
     for x in range(1, n_bins+1):
         df['bin_temp'] = np.where(((df['lis_premium'] >= - step * x) & (df['lis_premium'] < (-step * (x - 1))) & (df['year'] == year)), ( -step * x), df['bin_temp'])
-        print(x)
 
     for x in range(1, n_bins+1):
         df['bin_temp'] = np.where(((df['lis_premium'] >= step * x) & (df['lis_premium'] < (step * (x + 1))) & (df['year'] == year)), (step * x), df['bin_temp'])
-        print(x)
 
     df['bin'] = df.groupby('uniqueID')['bin_temp'].transform('max')
 
