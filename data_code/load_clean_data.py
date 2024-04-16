@@ -23,7 +23,7 @@ main['firm_cohort_state'] = main.groupby(['orgParentCode', 'state'])['year'].tra
 main['e_ben'] = np.where(main['benefit'] == 'E', 1, 0) #indicator for enhanced benefit
 main['firm_exists'] = np.where((main['firm_cohort'] < main['year']), 1, 0) #if the firm existed before the year observed
 main['firm_exists_state'] = np.where((main['firm_cohort_state'] < main['year']), 1, 0) #if the firm existed in the state before the year observed
-main['share'] = main.groupby(['state', 'year', 'uniqueID'])['enrollment'].transform('sum') / main.groupby(['state', 'year'])['enrollment'].transform('sum') #share of enrollment in state and year
+main['share'] = main.groupby(['state', 'year', 'uniqueID'])['enrollmentImpute'].transform('sum') / main.groupby(['state', 'year'])['enrollmentImpute'].transform('sum') #share of enrollment in state and year
 main['ln_share'] = np.log(main['share'])
 main.to_csv('data/output/main_plus.csv', index=False)
 
