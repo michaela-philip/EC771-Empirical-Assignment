@@ -36,6 +36,12 @@ subsidy.to_csv('data/output/subsidy_plus.csv', index=False)
 full_data = pd.merge(main, subsidy, on = ['PDPregion', 'year'], how = 'outer')
 full_data['lis_premium'] = full_data['premium'] - full_data['subsidy']
 
+#value of lis_premium in 2006 to merge in
+data_2006 = full_data[full_data['year'] == 2006]
+lis_premium_2006 = data_2006[['uniqueID', 'lis_premium']].drop_duplicates()
+lis_premium_2006.rename(columns={'lis_premium': 'lis_premium_06'}, inplace=True)
+full_data = pd.merge(full_data, lis_premium_2006, on='uniqueID', how='left')
+
 #new variables from Ericson's code
 full_data['proposed_benchmark'] = np.where(full_data['lis_premium'] <= 0, 1, 0)
 full_data['proposed_benchmark'] = np.where(full_data['benefit'] == 'E', np.nan, full_data['proposed_benchmark'])
