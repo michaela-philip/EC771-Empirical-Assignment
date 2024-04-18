@@ -9,15 +9,6 @@ from rdrobust import rdrobust,rdbwselect,rdplot
 script_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(script_dir, '..'))
 
-#allows me to suppress the initial RD plot
-class MuteRdPlot:
-    def __enter__(self):
-        self._show_orig = plt.show
-        plt.show = lambda *args, **kwargs: None
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        plt.show = self._show_orig
-
 from data_code.load_clean_data import full_data as full_data
 
 #binned scatterplot using rdplot with optimal bin size
