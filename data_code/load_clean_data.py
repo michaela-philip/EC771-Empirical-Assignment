@@ -48,6 +48,11 @@ full_data = get_windows(full_data, 4, 2006, 2)
 full_data = get_windows(full_data, 2.5, 2006, 3)
 full_data = get_windows(full_data, 6, 2006, 4)
 
+#indicator for being in the window in 2006
+window_06 = full_data[full_data['rd_window_2'] == 1]
+plans_06 = window_06['uniqueID'].unique()
+full_data['window_06'] = np.where(full_data['uniqueID'].isin(plans_06), 1, 0)
+
 #create polynomials
 full_data['lis_prem_neg_sq'] = full_data['lis_prem_neg'] ** 2
 full_data['lis_prem_neg_cu'] = full_data['lis_prem_neg'] ** 3
