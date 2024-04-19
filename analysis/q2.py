@@ -35,12 +35,12 @@ poly_data['quart_poly'] = quart_poly.predict(poly_data)
 poly_data_sort = poly_data.sort_values(by='lis_premium')
 
 #creating the graph 
-ytitle = "Log Enrollment Share, 2006"
-plt.scatter(scatter_data['bin'], scatter_data['bin_scatter'], label='Scatter')
-plt.plot(lin_data_sort['lis_premium'], lin_data_sort['local_lin'], linestyle='dashed', color='gray', label='Local Linear')
-plt.plot(poly_data_sort['lis_premium'], poly_data_sort['quart_poly'], linestyle='solid', color='black', label='Quartic Polynomial')
-plt.xlabel("Monthly Premium - LIS Subsidy, 2006")
-plt.ylabel(ytitle)
-plt.legend()
-plt.savefig('data/output/Figure3.png')
-plt.show()
+# ytitle = "Log Enrollment Share, 2006"
+# plt.scatter(scatter_data['bin'], scatter_data['bin_scatter'], label='Scatter')
+# plt.plot(lin_data_sort['lis_premium'], lin_data_sort['local_lin'], linestyle='dashed', color='gray', label='Local Linear')
+# plt.plot(poly_data_sort['lis_premium'], poly_data_sort['quart_poly'], linestyle='solid', color='black', label='Quartic Polynomial')
+# plt.xlabel("Monthly Premium - LIS Subsidy, 2006")
+# plt.ylabel(ytitle)
+# plt.legend()
+# plt.savefig('data/output/Figure3.png')
+# plt.show()

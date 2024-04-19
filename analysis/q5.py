@@ -19,4 +19,4 @@ print("The p-value for the manipulation test is " + str(rd_test_pval))
 print("The difference in estimated density at the cutoff is " + str((rd_test_diff.right - rd_test_diff.left).round(4)))
 
 density_plot = rdplotdensity(rd_test, full_data['lis_premium'], xlabel = 'Monthly Premium - LIS Subsidy', title = 'Manipulation Test')
-print(density_plot)
+# print(density_plot)
