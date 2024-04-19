@@ -31,6 +31,9 @@ for lin_year in data_year_lin:
     results.append(result)
 results_df = pd.DataFrame(results)
 results_df.index = [2006, 2007, 2008, 2009, 2010]
+results_df['se_1'] = results_df['se_1'].apply(lambda x: f'({x})')
+results_df['se_2'] = results_df['se_2'].apply(lambda x: f'({x})')
+results_df['se_3'] = results_df['se_3'].apply(lambda x: f'({x})')
 table_3_a = results_df.T
 table_3_a.index = ['Below benchmark, 2006', ' ', 'Below Benchmark', ' ', 'Above Benchmark', ' ', 'Observations', 'R^2']
 panel_a = pd.DataFrame(index=['Panel A. Local linear, bandwidth $4'])
@@ -51,6 +54,7 @@ for quad_year in data_year_quad:
     results_quad.append(result_quad)
 results_df_quad = pd.DataFrame(results_quad)
 results_df_quad.index = [2006, 2007, 2008, 2009, 2010]
+results_df_quad['se_1'] = results_df_quad['se_1'].apply(lambda x: f'({x})')
 table_3_b = results_df_quad.T
 table_3_b.index = ['Below benchmark, 2006', ' ', 'Observations', 'R^2']
 panel_b = pd.DataFrame(index=['Panel B. Polynomial, bandwidth $4'])

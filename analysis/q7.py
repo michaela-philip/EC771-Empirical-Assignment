@@ -31,6 +31,7 @@ for year in years:
     results.append(result)
 results_df = pd.DataFrame(results)
 results_df.index = [2006, 2007, 2008, 2009, 2010]
+results_df['se_1'] = results_df['se_1'].apply(lambda x: f'({x})')
 table_4_a = results_df.T
 table_4_a.index = ['LIS Premium, 2006', ' ', 'Bandwidth']
 panel_a = pd.DataFrame(index=['Panel A. Local linear, CE-optimal Bandwidths'])
@@ -43,6 +44,7 @@ for year in years:
     results_quad.append(result_quad)
 results_df_quad = pd.DataFrame(results_quad)
 results_df_quad.index = [2006, 2007, 2008, 2009, 2010]
+results_df_quad['se_1'] = results_df_quad['se_1'].apply(lambda x: f'({x})')
 table_4_b = results_df_quad.T
 table_4_b.index = ['LIS Premium, 2006', ' ', 'Bandwidth']
 panel_b = pd.DataFrame(index=['Panel B. Polynomial, CE-optimal Bandwidths'])
