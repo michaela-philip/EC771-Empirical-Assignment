@@ -24,10 +24,10 @@ full_data = pd.merge(full_data, premium_2007, on='uniqueID', how='left')
 
 full_data['premium_diff'] = full_data['premium_07'] - full_data['premium_06']
 
-full_data = full_data.rename(columns={'ln_share': 'ln\_share'})
+full_data = full_data.rename(columns={'ln_share': 'lnshare', 'lis_premium_06' : 'lispremium06'})
 
 #run 2sls
-endog = full_data['ln\_share'] 
+endog = full_data['lnshare'] 
 dependent = full_data['premium_diff']
-instruments = full_data['lis_premium_06']
+instruments = full_data['lispremium06']
 iv = IV2SLS(dependent, None, endog, instruments).fit()
